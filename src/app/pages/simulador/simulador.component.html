@@ -1,0 +1,81 @@
+<section class="simulador">
+    <form class="simulador__formulario" [formGroup]="formulario_simulador" (submit)="setForm()" >
+        <section class="simulador__formulario__seccion" >
+            <mat-form-field>
+                <mat-label>Tipo de crédito</mat-label>
+                <mat-select formControlName="tipo_credito" name="tipo_credito" id="tipo_credito">
+                    <mat-option   *ngFor="let credito of lista_tipos_credito" [value]="credito.id">{{credito.nombre}} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario_simulador.controls['tipo_credito'].hasError('required')" > Campo Requerido </mat-error>
+              </mat-form-field>
+        </section>
+        <section class="simulador__formulario__seccion" >
+            <p>El plazo y el valor mínimo están sujetos a las condiciones y políricas de cada Producto o Destino. Para el cálculo es necesario diligenciar la siguiente información y seleccionar la opción</p>
+        </section>
+        <mat-divider></mat-divider>
+        <section class="simulador__formulario__seccion" >
+            <mat-form-field class="example-full-width">
+                <mat-label>Valor del préstamo</mat-label>
+                <input matInput placeholder="1.000.000 " value="valor_credito | currency: 'USD' | lowercase" formControlName="valor_credito">
+                <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('required')" > Campo Requerido </mat-error>
+                <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('min')" > Valor minimo $ 500.000 </mat-error>
+                <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('max')" > Valor minimo $ 100.000.000 </mat-error>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Plazo en meses</mat-label>
+                <input matInput placeholder="12" value="" formControlName="plazo_meses">
+                <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('required')" > Campo Requerido </mat-error>
+                <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('min')" > Minimo 3 meses </mat-error>
+                <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('max')" > Maximo 36 meses </mat-error>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Tasa de interés</mat-label>
+                <input matInput placeholder="" value=""  formControlName="tasa_interes">
+              </mat-form-field>
+        </section>
+        <section class="simulador__formulario__seccion" >
+            <mat-form-field>
+                <mat-label>¿Simular con seguro?</mat-label>
+                <mat-select formControlName="simular_con_seguro" name="simular_con_seguro" id="simular_con_seguro">
+                    <mat-option   *ngFor="let seguro of lista_simular_con_seguro" [value]="seguro.id">{{seguro.nombre}} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario_simulador.controls['simular_con_seguro'].hasError('required')" > Campo Requerido </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Tipo de Poliza</mat-label>
+                <mat-select formControlName="tipo_poliza" name="tipo_poliza" id="tipo_poliza">
+                    <mat-option   *ngFor="let poliza of lista_tipos_poliza" [value]="poliza.id">{{poliza.nombre}} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario_simulador.controls['tipo_poliza'].hasError('required')" > Campo Requerido </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Genero</mat-label>
+                <mat-select formControlName="genero" name="genero" id="genero">
+                    <mat-option   *ngFor="let genero of lista_genero" [value]="genero.id">{{genero.nombre}} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario_simulador.controls['genero'].hasError('required')" > Campo Requerido </mat-error>
+              </mat-form-field>
+     
+        </section>
+        <section class="simulador__formulario__seccion">
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha de Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="formulario_simulador.controls['fecha_nacimiento'].hasError('required')" > Campo Requerido </mat-error>
+               <mat-error *ngIf="!formulario_simulador.controls['fecha_nacimiento'].hasError('myValidation')" >Fecha Invalida </mat-error>
+              </mat-form-field>
+        </section>
+
+        <section class="simulador__formulario__buttons">
+            <button type="submit" [disabled]=!this.formulario_simulador.valid mat-flat-button color="primary">Simular crédito</button>
+        </section>
+    </form>
+</section>  
+
+<app-loader *ngIf="onLoading" ></app-loader>
+<app-status *ngIf="onAvissment"></app-status>

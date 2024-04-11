@@ -46,7 +46,7 @@ export class SimuladorComponent implements OnInit {
         tipo_credito : ['',Validators.required],
         valor_credito : ['',[Validators.required,Validators.min(500000),Validators.max(1000000000)]],
         plazo_meses : ['',[Validators.required,Validators.min(3),Validators.max(36)]],
-        tasa_interes : ['12,5%',Validators.required],
+        tasa_interes : [{ value: '12,5%', disabled: true },Validators.required],
         simular_con_seguro : ['',Validators.required],
         tipo_poliza : ['',Validators.required],
         genero: ['',Validators.required],

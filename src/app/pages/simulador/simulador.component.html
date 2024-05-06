@@ -4,7 +4,7 @@
             <mat-form-field>
                 <mat-label>Tipo de crédito</mat-label>
                 <mat-select formControlName="tipo_credito" name="tipo_credito" id="tipo_credito">
-                    <mat-option   *ngFor="let credito of lista_tipos_credito" [value]="credito.id">{{credito.nombre}} </mat-option>
+                    <mat-option   *ngFor="let credito of lista_tipos_credito" [value]="credito.nombre">{{credito.nombre}} </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formulario_simulador.controls['tipo_credito'].hasError('required')" > Campo Requerido </mat-error>
               </mat-form-field>
@@ -16,14 +16,14 @@
         <section class="simulador__formulario__seccion" >
             <mat-form-field class="example-full-width">
                 <mat-label>Valor del préstamo</mat-label>
-                <input matInput placeholder="1.000.000 " value="valor_credito | currency: 'USD' | lowercase" formControlName="valor_credito">
+                <input type="number" matInput placeholder="1.000.000 " value="valor_credito | currency: 'USD' | lowercase" formControlName="valor_credito">
                 <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('required')" > Campo Requerido </mat-error>
                 <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('min')" > Valor minimo $ 500.000 </mat-error>
                 <mat-error *ngIf="formulario_simulador.controls['valor_credito'].hasError('max')" > Valor minimo $ 100.000.000 </mat-error>
               </mat-form-field>
               <mat-form-field class="example-full-width">
                 <mat-label>Plazo en meses</mat-label>
-                <input matInput placeholder="12" value="" formControlName="plazo_meses">
+                <input type="number" matInput placeholder="12" value="" formControlName="plazo_meses">
                 <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('required')" > Campo Requerido </mat-error>
                 <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('min')" > Minimo 3 meses </mat-error>
                 <mat-error *ngIf="formulario_simulador.controls['plazo_meses'].hasError('max')" > Maximo 36 meses </mat-error>
@@ -36,22 +36,22 @@
         <section class="simulador__formulario__seccion" >
             <mat-form-field>
                 <mat-label>¿Simular con seguro?</mat-label>
-                <mat-select formControlName="simular_con_seguro" name="simular_con_seguro" id="simular_con_seguro">
-                    <mat-option   *ngFor="let seguro of lista_simular_con_seguro" [value]="seguro.id">{{seguro.nombre}} </mat-option>
+                <mat-select (selectionChange)="validationTypeCredit()" formControlName="simular_con_seguro" name="simular_con_seguro" id="simular_con_seguro">
+                    <mat-option   *ngFor="let seguro of lista_simular_con_seguro" [value]="seguro.nombre">{{seguro.nombre}} </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formulario_simulador.controls['simular_con_seguro'].hasError('required')" > Campo Requerido </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Tipo de Poliza</mat-label>
-                <mat-select formControlName="tipo_poliza" name="tipo_poliza" id="tipo_poliza">
-                    <mat-option   *ngFor="let poliza of lista_tipos_poliza" [value]="poliza.id">{{poliza.nombre}} </mat-option>
+                <mat-select  formControlName="tipo_poliza" name="tipo_poliza" id="tipo_poliza"  [disabled]="formulario_simulador.get('simular_con_seguro')?.value === 2">
+                    <mat-option   *ngFor="let poliza of lista_tipos_poliza" [value]="poliza.nombre">{{poliza.nombre}} </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formulario_simulador.controls['tipo_poliza'].hasError('required')" > Campo Requerido </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Genero</mat-label>
                 <mat-select formControlName="genero" name="genero" id="genero">
-                    <mat-option   *ngFor="let genero of lista_genero" [value]="genero.id">{{genero.nombre}} </mat-option>
+                    <mat-option   *ngFor="let genero of lista_genero" [value]="genero.nombre">{{genero.nombre}} </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formulario_simulador.controls['genero'].hasError('required')" > Campo Requerido </mat-error>
               </mat-form-field>
@@ -78,4 +78,4 @@
 </section>  
 
 <app-loader *ngIf="onLoading" ></app-loader>
-<app-status *ngIf="onAvissment"></app-status>
+<app-resultado *ngIf="onResult" [resultado]="this.resultado_simulador" [formulario]="this.formulario_simulador.value" [loading]="onLoading" ></app-resultado>

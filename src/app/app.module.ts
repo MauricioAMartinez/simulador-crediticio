@@ -19,7 +19,10 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoaderComponent } from './components/loader/loader.component';
 import { StatusComponent } from './components/status/status.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SolicitudComponent } from './pages/solicitud/solicitud.component';
+import { ResultadoComponent } from './pages/simulador/resultado/resultado.component';
 
+import { HttpClientModule } from "@angular/common/http";
 
 
 
@@ -30,7 +33,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AppComponent,
     SimuladorComponent,
     LoaderComponent,
-    StatusComponent
+    StatusComponent,
+    SolicitudComponent,
+    ResultadoComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatNativeDateModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

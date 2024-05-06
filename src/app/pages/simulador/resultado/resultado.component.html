@@ -1,0 +1,148 @@
+<ng-container *ngIf="loading; else content">
+  <!-- Mostrar un mensaje de carga o spinner aquí -->
+</ng-container>
+<ng-template #content>
+  <div class="resultado">
+    <div class="resultado__card">
+      <section class="resultado__card__titulo">
+        <h2 class="resultado__card__titulo__text">Resultado</h2>
+        <p class="resultado__card__titulo__descripcion">
+          El resultado de tu simulación es el siguiente
+        </p>
+      </section>
+      <form
+        [formGroup]="formulario_solicitud"
+        class="resultado__card__formulario"
+      >
+        <section class="resultado__card__formulario__seccion">
+          <mat-form-field class="example-full-width">
+            <mat-label>Valor Prestamo</mat-label>
+            <input
+              formControlName="valor_credito"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Plazo</mat-label>
+            <input
+              formControlName="plazo_meses"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Interes Anual</mat-label>
+            <input
+              formControlName="tasa_interes"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+        </section>
+        <section class="resultado__card__formulario__seccion">
+          <mat-form-field class="example-full-width">
+            <mat-label>Cuota Mensual</mat-label>
+            <input
+              formControlName="valor_cuota"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Intereses Mensual</mat-label>
+            <input
+              formControlName="interes_mensual"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Total a Pagar</mat-label>
+            <input
+              formControlName="valor_total_credito"
+              matInput
+              placeholder=""
+              value=""
+            />
+          </mat-form-field>
+        </section>
+        <section class="resultado__card__formulario__seccion">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nombres</mat-label>
+            <input formControlName="nombres" matInput placeholder="" value="" />
+            <mat-error
+              *ngIf="
+                formulario_solicitud.controls['nombres'].hasError(
+                  'required'
+                )
+              "
+            >
+              Campo Requerido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Apellidos</mat-label>
+            <input
+              formControlName="apellidos"
+              matInput
+              placeholder=""
+              value=""
+            />
+            <mat-error
+              *ngIf="
+                formulario_solicitud.controls['apellidos'].hasError(
+                  'required'
+                )
+              "
+            >
+              Campo Requerido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Correo</mat-label>
+            <input formControlName="correo" matInput placeholder="" value="" />
+            <mat-error
+              *ngIf="
+                formulario_solicitud.controls['correo'].hasError(
+                  'required'
+                )
+              "
+            >
+              Campo Requerido
+            </mat-error>
+            <mat-error
+              *ngIf="
+                formulario_solicitud.controls['correo'].hasError('email')
+              "
+            >
+              Correo No Valido
+            </mat-error>
+          </mat-form-field>
+        </section>
+      </form>
+
+      <section class="resultado__card__buttons">
+        <button mat-raised-button color="primary">
+          Realizar otra simulación
+        </button>
+        <button
+          [disabled]="!this.formulario_solicitud.valid"
+          (click)="setForm()"
+          mat-raised-button
+          color="accent"
+        >
+          Solicitar credito
+        </button>
+      </section>
+    </div>
+  </div>
+</ng-template>
+<app-loader *ngIf="loading" ></app-loader>
+<app-status *ngIf="finalizado"></app-status>
